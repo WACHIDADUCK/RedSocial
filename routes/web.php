@@ -1,15 +1,20 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CommunityLinkController; // Agregar el controlador de CommunityLink
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Reemplaza la ruta '/dashboard' con el controlador
+Route::get('/dashboard', [CommunityLinkController::class, 'index'])
+->middleware(['auth', 'verified'])
+->name('dashboard');
+
+// Se crea una ruta (/borrar) y llama al metodo show de comunitryLinkController en Http/Controller/CommunityLinkController
+Route::get('/borrar', [CommunityLinkController::class, 'show']); 
 
 Route::get('/contact', function () {
     return view('contact');
@@ -18,8 +23,6 @@ Route::get('/contact', function () {
 Route::get('/analytics', function () {
     return view('analytics');
 })->middleware(['auth', 'verified'])->name('analytics');
-
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
