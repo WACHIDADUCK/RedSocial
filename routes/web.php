@@ -13,6 +13,10 @@ Route::get('/dashboard', [CommunityLinkController::class, 'index'])
 ->middleware(['auth', 'verified'])
 ->name('dashboard');
 
+//Añadir Link community-add-link
+Route::post('/dashboard', [CommunityLinkController::class, 'store'])
+    ->middleware(['auth', 'verified']);
+
 // Se crea una ruta (/borrar) y llama al metodo show de comunitryLinkController en Http/Controller/CommunityLinkController
 Route::get('/borrar', [CommunityLinkController::class, 'show']); 
 

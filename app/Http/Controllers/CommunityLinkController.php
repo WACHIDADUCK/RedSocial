@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CommunityLink;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommunityLinkController extends Controller
 {
@@ -27,10 +28,27 @@ class CommunityLinkController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
+        public function store(Request $request)
+        {
+            $data = $request->validate([
+                'title' => 'required|max:255',
+                'link' => 'required|unique:community_links|url|max:255',
+                ]);
+                
+                $link = new CommunityLink($data);
+                // Si uso CommunityLink::create($data) tengo que declarar user_id y channel_id como $fillable
+                $link->user_id = Auth::id();
+                $link->channel_id = 1;
+                $link->save();
+                
+            $request->merge([
+                'user_id' => Auth::id(),
+                'channel_id' => 1
+                ]);
+            
+            CommunityLink::create($request->all());
+            return back();
+        }
 
     /**
      * Display the specified resource.
