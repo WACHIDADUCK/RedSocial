@@ -11,21 +11,20 @@
             <!-- Sección de los Links -->
             <div class="w-3/4 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    
                     {{ __("Here you will see the Community Links!") }}
                     <br>
                     @foreach ($links as $link)
-                    <br>
-                    <small>Contributed by: {{$link->creator->name}} {{$link->updated_at->diffForHumans()}}</small>
-                    <li>{{$link->title}}</li>
-                    <x-community-links :link="$link" />
+                    <x-community-links :link="$link"/>
                     @endforeach
+                    
                     {{$links->links()}}
                 </div>
             </div>
 
             <!-- Sección del formulario -->
             <div class="w-1/4 ml-4">
-                <x-community-add-link />
+                <x-community-add-link :channels="$channels"/>
             </div>
         </div>
     </div>
