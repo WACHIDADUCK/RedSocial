@@ -6,16 +6,22 @@
             <label for="title" class="block text-white font-medium">Title:</label>
             <input type="text" id="title" name="title"
                 value="{{ old('title') }}"
-                class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                class=" @error('title') is-invalid @enderror mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 placeholder="What is the title of your article?">
+            @error('title')
+            <div class="text-red-500 mt-2">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="mb-4">
             <label for="link" class="block text-white font-medium">Link:</label>
             <input type="text" id="link" name="link"
                 value="{{ old('link') }}"
-                class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                class="@error('link') is-invalid @enderror mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 placeholder="What is the URL?">
+                @error('link')
+                <div class="text-red-500 mt-2">{{ $message }}</div>
+                @enderror
         </div>
 
         <div class="mb-4">
@@ -25,7 +31,6 @@
                 name="channel_id">
 
                 <option selected disabled>Pick a Channel...</option>
-
                 @foreach ($channels as $channel)
                 <option value="{{ $channel->id }}" {{ old('channel_id') == $channel->id ? 'selected' : '' }}>
                     {{ $channel->title }}
@@ -34,8 +39,9 @@
                     {{ $channel->title }}
                 </option> -->
                 @endforeach
-                
+
             </select>
+            <!-- ERRORES -->
             @error('channel_id')
             <span class="text-red-500 mt-2">{{ $message }}</span>
             @enderror
