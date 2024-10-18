@@ -20,8 +20,8 @@
                         {{ __('Contact') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('analytics')" :active="request()->routeIs('analytics')">
-                        {{ __('Analytics ') }}
+                    <x-nav-link :href="route('myLinks')" :active="request()->routeIs('myLinks')">
+                        {{ __('My Links') }}
                     </x-nav-link>
                 </div>
             </div>

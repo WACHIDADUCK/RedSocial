@@ -20,6 +20,13 @@ class CommunityLinkController extends Controller
         return view('dashboard', compact('links','channels'));
     }
 
+    public function myLinks()
+    {
+        $links = CommunityLink::where('user_id', Auth::id())->paginate(10);
+        $channels = Channel::orderBy('title','asc')->get();
+        return view("mylinks", compact('links','channels'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -34,7 +41,6 @@ class CommunityLinkController extends Controller
         public function store(CommunityLinkForm  $request)
         {   
                 $data = $request->validated();
-
                 $link = new CommunityLink($data);
                 // Si uso CommunityLink::create($data) tengo que declarar user_id y channel_id como $fillable
                 $link->user_id = Auth::id();

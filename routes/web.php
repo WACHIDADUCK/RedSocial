@@ -17,6 +17,10 @@ Route::get('/dashboard', [CommunityLinkController::class, 'index'])
 Route::post('/dashboard', [CommunityLinkController::class, 'store'])
     ->middleware(['auth', 'verified']);
 
+
+Route::get('/mylinks', [CommunityLinkController::class, 'myLinks'])->name('myLinks')
+    ->middleware(['auth', 'verified']);
+
 // Se crea una ruta (/borrar) y llama al metodo show de comunitryLinkController en Http/Controller/CommunityLinkController
 Route::get('/borrar', [CommunityLinkController::class, 'show']); 
 

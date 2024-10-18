@@ -44,4 +44,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function myLinks(){
+        return $this->hasMany(CommunityLink::class);
+    }
 }
