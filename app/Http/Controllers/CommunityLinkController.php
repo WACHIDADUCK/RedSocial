@@ -15,14 +15,15 @@ class CommunityLinkController extends Controller
      */
     public function index()
     {
-        $links = CommunityLink::where('approved', 1)->paginate(25);
+        $links = CommunityLink::where('approved', 1)->latest('updated_at')->paginate(25);
         $channels = Channel::orderBy('title','asc')->get();
         return view('dashboard', compact('links','channels'));
     }
 
     public function myLinks()
     {
-        $links = CommunityLink::where('user_id', Auth::id())->paginate(10);
+        // $links = CommunityLink::where('user_id', Auth::id())->paginate(10);
+        $links = CommunityLink::where('approved', true)->latest('updated_at')->paginate(10);
         $channels = Channel::orderBy('title','asc')->get();
         return view("mylinks", compact('links','channels'));
     }
@@ -38,18 +39,40 @@ class CommunityLinkController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-        public function store(CommunityLinkForm  $request)
-        {   
-                $data = $request->validated();
-                $link = new CommunityLink($data);
-                // Si uso CommunityLink::create($data) tengo que declarar user_id y channel_id como $fillable
-                $link->user_id = Auth::id();
-                $link->approved = Auth::user()->trusted ?? false;
-                $link->save();
-                session()->flash('success', 'El link se ha creado exitosamente.');
+    public function store(CommunityLinkForm  $request)
+    {
+        // $data = $request->validated();
 
+        // $link = new CommunityLink($data);
+        // $link->user_id = Auth::id();
+        // $link->approved = Auth::user()->trusted ?? false;
+        // $link->save();
+        // session()->flash('success', 'El link se ha creado exitosamente.');
+
+        // return back();
+
+        // Obtener los datos validados del formulario
+        $data = $request->validated();
+
+        // Crear una instancia de CommunityLink con los datos validados
+        $communityLink = new CommunityLink($data);
+        $communityLink->user_id = Auth::id();  // Asignar el ID del usuario actual
+
+        // Verificar si el enlace ya ha sido enviado
+        if ($communityLink->hasAlreadyBeenSubmitted()) {
+            // Si el enlace ya existe, los mensajes flash ya han sido gestionados dentro de hasAlreadyBeenSubmitted
             return back();
         }
+
+        // Si el enlace es nuevo, aprobarlo si el usuario es de confianza y guardarlo
+        $communityLink->approved = Auth::user()->trusted ?? false;  // Aprobar automáticamente si el usuario es de confianza
+        $communityLink->save();
+
+        // Mensaje de éxito si el enlace fue creado
+        session()->flash('success', 'El link se ha creado exitosamente.');
+
+        return back();
+    }
 
     /**
      * Display the specified resource.

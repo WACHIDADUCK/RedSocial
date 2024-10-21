@@ -5,7 +5,7 @@
         {{ $link->channel->title }}
     </span>
     <li>{{$link->title}}</li>
-    <p>{{$link->link}}</p>
-
-
+    <p>{{$link->link}} 
+        <span class="{{$link->approved ? 'text-green-500' : 'text-red-500'}}">
+        {{$link->approved ? 'Aproved' : 'Not Aproved'}}</span></p>
 </div>

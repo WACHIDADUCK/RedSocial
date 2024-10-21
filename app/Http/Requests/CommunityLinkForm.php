@@ -23,7 +23,7 @@ class CommunityLinkForm extends FormRequest
     {
         return [
             'title' => 'required|max:255',
-            'link' => 'required|unique:community_links|url|max:255',
+            'link' => 'required|url|max:255', //|unique:community_links
             'channel_id' => 'required|exists:channels,id',
             ];
     }
@@ -32,7 +32,7 @@ class CommunityLinkForm extends FormRequest
         return [
             'title.required' => 'El título es obligatorio.',
             'link.required' => 'El enlace es obligatorio.',
-            'link.unique' => 'Este enlace ya ha sido enviado.',
+            // 'link.unique' => 'Este enlace ya ha sido enviado.',
             'link.url' => 'El formato del enlace no es válido.',
             'channel_id.required' => 'Debes elegir un canal.',
             'channel_id.exists' => 'El canal seleccionado no es válido.',
