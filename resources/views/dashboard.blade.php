@@ -19,7 +19,6 @@
                     @foreach ($links as $link)
                     <x-community-links :link="$link"/>
                     @endforeach
-                    {{$links->links()}}
                 @endif
                 </div>
             </div>

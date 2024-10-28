@@ -6,8 +6,11 @@
         style="background-color: {{ $link->channel->color }}">
         {{ $link->channel->title }}
     </span></a>
-    <li>{{$link->title}}</li>
+    <li>{{$link->title}} </li>
+    
     <p>{{$link->link}} 
         <span class="{{$link->approved ? 'text-green-500' : 'text-red-500'}}">
-        {{$link->approved ? 'Aproved' : 'Not Aproved'}}</span></p>
+        {{$link->approved ? 'Aproved' : 'Not Aproved'}}</span> 
+            <span class="text-blue-500 text-xl">👍  {{ $link->users()->count() }}</span>
+       </p>
 </div>

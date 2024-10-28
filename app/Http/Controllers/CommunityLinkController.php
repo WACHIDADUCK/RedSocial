@@ -19,7 +19,7 @@ class CommunityLinkController extends Controller
         // dd($channel);
         if ($channel) {
             // Filtrar los links por el canal
-            $links = CommunityLink::where('channel_id', $channel->id)->where('approved', 1)->latest('updated_at')->paginate(25);
+            $links = $channel->communityLinks()->where('approved', 1)->latest('updated_at')->paginate(25);
             $channels = Channel::orderBy('title', 'asc')->get();
             return view('dashboard', compact('links', 'channels'));
         } else {
