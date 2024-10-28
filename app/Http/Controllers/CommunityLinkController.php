@@ -13,11 +13,22 @@ class CommunityLinkController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+    public function index(Channel $channel = null)
     {
-        $links = CommunityLink::where('approved', 1)->latest('updated_at')->paginate(25);
-        $channels = Channel::orderBy('title','asc')->get();
-        return view('dashboard', compact('links','channels'));
+        // dd($channel);
+        if ($channel) {
+            // Filtrar los links por el canal
+            $links = CommunityLink::where('channel_id', $channel->id)->latest('updated_at')->paginate(25);
+            $channels = Channel::orderBy('title', 'asc')->get();
+            return view('dashboard', compact('links', 'channels'));
+        } else {
+            // Mostrar todos los links
+            // dd($channel);
+            $links = CommunityLink::where('approved', 1)->latest('updated_at')->paginate(25);
+            $channels = Channel::orderBy('title', 'asc')->get();
+            return view('dashboard', compact('links', 'channels'));
+        }
     }
 
     public function myLinks()
@@ -41,17 +52,7 @@ class CommunityLinkController extends Controller
      */
     public function store(CommunityLinkForm  $request)
     {
-        // $data = $request->validated();
 
-        // $link = new CommunityLink($data);
-        // $link->user_id = Auth::id();
-        // $link->approved = Auth::user()->trusted ?? false;
-        // $link->save();
-        // session()->flash('success', 'El link se ha creado exitosamente.');
-
-        // return back();
-
-        // Obtener los datos validados del formulario
         $data = $request->validated();
 
         // Crear una instancia de CommunityLink con los datos validados

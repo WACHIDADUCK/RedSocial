@@ -13,6 +13,9 @@ Route::get('/dashboard', [CommunityLinkController::class, 'index'])
 ->middleware(['auth', 'verified'])
 ->name('dashboard');
 
+// Route::get('dashboard/{channel}', [CommunityLinkController::class, 'index']);
+Route::get('dashboard/{channel:slug}',[CommunityLinkController::class, 'index']);
+
 //Añadir Link community-add-link
 Route::post('/dashboard', [CommunityLinkController::class, 'store'])
     ->middleware(['auth', 'verified']);
