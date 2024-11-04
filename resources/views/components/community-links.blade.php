@@ -7,10 +7,33 @@
         {{ $link->channel->title }}
     </span></a>
     <li>{{$link->title}} </li>
+
+    <form method="POST" action="/votes/{{ $link->id }}">
+
+        @csrf
+        
+        <button type="submit"
+        
+        class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 disabled:opacity-50 
+        {{ Auth::check() && Auth::user()->votedFor($link) ?
+
+            'bg-green-500 hover:bg-green-600 text-white' :
+            'bg-gray-500 hover:bg-gray-600 text-white'
+        }}
+        "
+        
+        {{ !Auth::user()->isTrusted() ? 'disabled' : '' }}>
+        
+        {{ $link->users()->count() }}
+        
+        </button>
+        
+        </form>
+        
     
-    <p>{{$link->link}} 
+        <p>{{$link->link}} 
         <span class="{{$link->approved ? 'text-green-500' : 'text-red-500'}}">
         {{$link->approved ? 'Aproved' : 'Not Aproved'}}</span> 
-            <span class="text-blue-500 text-xl">👍  {{ $link->users()->count() }}</span>
-       </p>
+            {{-- <span class="text-blue-500 text-xl">👍  {{ $link->users()->count() }}</span> --}}
+        </p>
 </div>

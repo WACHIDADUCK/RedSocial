@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommunityLinkController; // Agregar el controlador de CommunityLink
+use App\Http\Controllers\CommunityLinkUserController; // Agregar el controlador de CommunityLink
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,6 +19,10 @@ Route::get('dashboard/{channel:slug}',[CommunityLinkController::class, 'index'])
 
 //Añadir Link community-add-link
 Route::post('/dashboard', [CommunityLinkController::class, 'store'])
+    ->middleware(['auth', 'verified']);
+
+// Votar link
+Route::post('/votes/{link}', [CommunityLinkUserController::class, 'store'])
     ->middleware(['auth', 'verified']);
 
 

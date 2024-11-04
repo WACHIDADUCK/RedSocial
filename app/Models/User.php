@@ -37,11 +37,15 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+    public function votedFor(CommunityLink $link)
+    {
+        return $this->votes->contains($link);
+    }
 
-     public function isTrusted()
-     {
-       return $this->trusted;
-     }
+    public function isTrusted()
+    {
+        return $this->trusted;
+    }
 
     protected function casts(): array
     {
@@ -54,5 +58,10 @@ class User extends Authenticatable
     public function myLinks()
     {
         return $this->hasMany(CommunityLink::class);
+    }
+
+    public function votes()
+    {
+        return $this->belongsToMany(CommunityLink::class, "community_link_users");
     }
 }
