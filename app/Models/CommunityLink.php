@@ -31,15 +31,20 @@ class CommunityLink extends Model
                 return true;
             } else {
                 if ($existing->approved)
-                session()->flash('info', 'The link already exists and it is already approved but you are not a trusted user, so it will not be updated in the list.');
+                    session()->flash('info', 'The link already exists and it is already approved but you are not a trusted user, so it will not be updated in the list.');
                 else
-                session()->flash('info', 'The link already exists and it is pending for approval but you are not a trusted user, so it will not be updated in the list.');
+                    session()->flash('info', 'The link already exists and it is pending for approval but you are not a trusted user, so it will not be updated in the list.');
             }
             return true;
         }
         return false;
     }
-    
+
+    public function community_link_users()
+    {
+        return $this->hasMany(CommunityLinkUser::class);
+    }
+
     public function channel()
     {
         return $this->belongsTo(Channel::class);

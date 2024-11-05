@@ -7,6 +7,7 @@ use App\Models\Channel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CommunityLinkForm;
+use App\Queries\CommunityLinkQuery;
 
 class CommunityLinkController extends Controller
 {
@@ -17,26 +18,28 @@ class CommunityLinkController extends Controller
     public function index(Channel $channel = null)
     {
         // dd($channel);
-        if ($channel) {
+        if (request()->exists('popular') && $channel) {
+            // Muestra los populares
+            $links = (new CommunityLinkQuery())->getMostPopularChannel($channel);
+        }else if (request()->exists('popular')) {
+            // Muestra los populares
+            $links = (new CommunityLinkQuery())->getMostPopular();
+        } else if ($channel) {
             // Filtrar los links por el canal
-            $links = $channel->communityLinks()->where('approved', 1)->latest('updated_at')->paginate(25);
-            $channels = Channel::orderBy('title', 'asc')->get();
-            return view('dashboard', compact('links', 'channels'));
+            $links = (new CommunityLinkQuery())->getByChannel($channel);
         } else {
             // Mostrar todos los links
-            // dd($channel);
-            $links = CommunityLink::where('approved', 1)->latest('updated_at')->paginate(25);
-            $channels = Channel::orderBy('title', 'asc')->get();
-            return view('dashboard', compact('links', 'channels'));
+            $links = (new CommunityLinkQuery())->getAll();
         }
+        $channels = Channel::orderBy('title', 'asc')->get();
+        return view('dashboard', compact('links', 'channels'));
     }
 
     public function myLinks()
     {
-        // $links = CommunityLink::where('user_id', Auth::id())->paginate(10);
         $links = CommunityLink::where('approved', true)->latest('updated_at')->paginate(10);
-        $channels = Channel::orderBy('title','asc')->get();
-        return view("mylinks", compact('links','channels'));
+        $channels = Channel::orderBy('title', 'asc')->get();
+        return view("mylinks", compact('links', 'channels'));
     }
 
     /**
