@@ -25,12 +25,22 @@ class ProfileController extends Controller
      * Update the user's profile information.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
+    {   
+        
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('profile-images', 'public');
+            $request->user()->image = $path;
+        }
+        
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
+            session()->flash('success', 'The picture already exists.');
+        } else {
+            session()->flash('info', 'There is no picture.');
         }
+
 
         $request->user()->save();
 

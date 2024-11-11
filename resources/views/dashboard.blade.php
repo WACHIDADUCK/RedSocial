@@ -22,8 +22,8 @@
                 </a>
                 </li>
                 </ul>
-                
         </div>
+        
         <div class="flex justify-between">
             <!-- Sección de los Links -->
             <div class="w-3/4 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">

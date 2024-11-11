@@ -28,6 +28,27 @@
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+                
+                <form class="flex items-center" method="GET" action="?find">
+                    <!-- Campo de búsqueda -->
+                    <input 
+                    name="link"
+                    type="text" 
+                    placeholder="Buscar..." 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                    <!-- Botón de búsqueda con lupa -->
+                    <button 
+                    type="submit" 
+                    class="p-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                    <!-- Ícono de lupa -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1111.192 3.292l4.829 4.829a1 1 0 01-1.414 1.414l-4.829-4.829A6 6 0 012 8z" clip-rule="evenodd" />
+                    </svg>
+                    </button>
+                </form>
+
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">

@@ -18,7 +18,12 @@ class CommunityLinkController extends Controller
     public function index(Channel $channel = null)
     {
         // dd($channel);
-        if (request()->exists('popular') && $channel) {
+
+        if (request()->exists('link')) {
+            // Muestra los que busca en la barra de busqueda
+            $link = request()->input('link');
+            $links = (new CommunityLinkQuery())->getByTitle($link);
+        }else if (request()->exists('popular') && $channel) {
             // Muestra los populares
             $links = (new CommunityLinkQuery())->getMostPopularChannel($channel);
         }else if (request()->exists('popular')) {
