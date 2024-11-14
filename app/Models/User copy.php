@@ -2,45 +2,32 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-/**
- * Class User
- *
- * @property $id
- * @property $name
- * @property $email
- * @property $email_verified_at
- * @property $password
- * @property $image
- * @property $remember_token
- * @property $created_at
- * @property $updated_at
- * @property $trusted
- *
- * @property CommunityLinkUser[] $communityLinkUsers
- * @property CommunityLink[] $communityLinks
- * @package App
- * @mixin \Illuminate\Database\Eloquent\Builder
- */
-class User extends Authenticatable
-implements MustVerifyEmail
+class User extends Authenticatable 
+// implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
-
-    protected $perPage = 20;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-    protected $fillable = ['name', 'email','password', 'image', 'trusted'];
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
 
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -53,11 +40,11 @@ implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
-
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
      */
-
     public function votedFor(CommunityLink $link)
     {
         return $this->votes->contains($link);
