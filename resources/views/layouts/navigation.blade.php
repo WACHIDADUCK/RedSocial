@@ -23,23 +23,30 @@
                     <x-nav-link :href="route('myLinks')" :active="request()->routeIs('myLinks')">
                         {{ __('My Links') }}
                     </x-nav-link>
+
+                    @can('administrate', App\Models\User::class)
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                        {{ __('Administrate') }}
+                    </x-nav-link>
+                    @endcan
+            
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                
+
                 <form class="flex items-center" method="GET" action="?find">
                     <!-- Campo de búsqueda -->
-                    <input 
+                    <input
                     name="link"
-                    type="text" 
-                    placeholder="Buscar..." 
+                    type="text"
+                    placeholder="Buscar..."
                     class="w-full px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                     <!-- Botón de búsqueda con lupa -->
-                    <button 
-                    type="submit" 
+                    <button
+                    type="submit"
                     class="p-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                     <!-- Ícono de lupa -->
@@ -79,18 +86,7 @@
                         </form>
                     </x-slot>
                 </x-dropdown>
-{{-- 
-                <x-dropdown-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-dropdown-link>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
 
-                        <x-dropdown-link :href="route('logout')"
-                                onclick="event.preventDefault();
-                                            this.closest('form').submit();">
-                            {{ __('Log Out') }}
-                        </x-dropdown-link> --}}
                     </form>
             </div>
 
