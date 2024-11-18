@@ -33,4 +33,12 @@ class CommunityLinkQuery
         ->orderBy('community_link_users_count', 'desc')
         ->paginate(25);
     }
+
+    public function findById($id)
+    {
+        if(!CommunityLink::where('id', $id)->first()){
+            return "Link no encontrado";
+        }
+        return CommunityLink::where('id', $id)->first();
+    }
 }
