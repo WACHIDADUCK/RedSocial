@@ -7,6 +7,7 @@ use App\Models\Channel;
 
 class CommunityLinkQuery
 {   
+
     public function getByTitle($link)
     {   
         return CommunityLink::whereAny(['link', 'title'], 'like', "%{$link}%")->latest('updated_at')->paginate(25);

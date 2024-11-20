@@ -5,6 +5,8 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
+
+
 class CommunityLinkForm extends FormRequest
 {
     /**
@@ -38,5 +40,6 @@ class CommunityLinkForm extends FormRequest
             'channel_id.exists' => 'El canal seleccionado no es válido.',
         ];
     }
+
 
 }

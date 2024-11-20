@@ -15,10 +15,10 @@ class CommunityLinkController extends Controller
      * Display a listing of the resource.
      */
 
+
     public function index(Channel $channel = null)
     {
         // dd($channel);
-
         if (request()->exists('link')) {
             // Muestra los que busca en la barra de busqueda
             $link = request()->input('link');
@@ -42,7 +42,7 @@ class CommunityLinkController extends Controller
 
     public function myLinks()
     {
-        $links = CommunityLink::where('approved', true)->latest('updated_at')->paginate(10);
+        $links = CommunityLink::where('user_id', Auth::user()->id)->latest('updated_at')->paginate(10);
         $channels = Channel::orderBy('title', 'asc')->get();
         return view("mylinks", compact('links', 'channels'));
     }

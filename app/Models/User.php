@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use HasApiTokens;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * Class User
@@ -31,7 +31,7 @@ use HasApiTokens;
 class User extends Authenticatable
 implements MustVerifyEmail
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     protected $perPage = 20;
 
